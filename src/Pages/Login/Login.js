@@ -3,9 +3,13 @@ import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-fireba
 import auth from '../../Firebase/firebase.init';
 import { useForm } from "react-hook-form";
 import Loading from '../Shared/Loading/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigation } from 'react-day-picker';
 
 const Login = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    let from = location.state?.from?.pathname || "/";
     const [
         signInWithEmailAndPassword,
         userEmailAndPass,
@@ -26,7 +30,7 @@ const Login = () => {
     //google
     if (user || userEmailAndPass) {
 
-        console.log(user || userEmailAndPass);
+        navigate(from, { replace: true });
     }
     const onSubmit = data => {
         console.log(data)
